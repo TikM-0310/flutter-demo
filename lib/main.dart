@@ -2,6 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:my_vlog/page/home_page.dart';
+import 'package:my_vlog/page/page_first.dart';
+import 'package:my_vlog/page/page_second.dart';
+import 'package:my_vlog/page/page_setting.dart';
 
 void main() {
   runApp(MyApp());
@@ -9,8 +12,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
   MyApp({super.key});
-
-  final List nameList = ["Job", "Pike", "Penny"];
 
   @override
   Widget build(BuildContext context) {
@@ -24,23 +25,11 @@ class MyApp extends StatelessWidget {
         ),
         // /const HomePage(),
         // Scaffold布局容器
-        home: Scaffold(
-            body: Center(
-              child: GestureDetector(
-                // 单击事件
-                onTap: () => {
-                  print("我被点击了！")
-                },
-                child: Container(
-                  width: 300,
-                  height: 300,
-                  color: Colors.deepPurple,
-                  child: Center(
-                    child: Text("我是中心"),
-                  ),
-                ),
-              ),
-            )
-        ));
+        home: FirstPage(),
+        routes: {
+          "/secondPage": (context) => SecondPage(),
+          "/settingPage": (context) => SettingPage()
+        },
+      );
   }
 }
