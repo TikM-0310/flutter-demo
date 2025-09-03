@@ -1,5 +1,8 @@
 allprojects {
     repositories {
+        maven { url 'https://mirrors.tuna.tsinghua.edu.cn/flutter/gradle' }
+        maven { url 'https://mirrors.tuna.tsinghua.edu.cn/nexus/maven-central/' }
+        maven { url 'https://mirrors.tuna.tsinghua.edu.cn/Google' }
         google()
         mavenCentral()
     }
