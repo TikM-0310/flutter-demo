@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_final_fields, prefer_interpolation_to_compose_strings, prefer_const_literals_to_create_immutables, non_constant_identifier_names
+// ignore_for_file: prefer_const_Constructors, prefer_final_fields, prefer_interpolation_to_compose_strings, prefer_const_literals_to_create_immutables, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
 import 'package:my_vlog/page/page_todoTitle.dart';
@@ -14,27 +14,31 @@ class PageTodo extends StatefulWidget {
 
 class _PageTodoState extends State<PageTodo> {
 
-  // 接收输入框返回的值
+  // 接收輸入框返回的值
   final TextEditingController _controller = TextEditingController();
+  final TextEditingController _contentController = TextEditingController(); // 新增內容控制器
   final TextEditingController _searchController = TextEditingController();
   List<Map<String, dynamic>> todoList = [];
   List<Map<String, dynamic>> filteredList = [];
 
+  // 初始化(State創建時會自動調用)，overrode重寫屬性標識（父類）
   @override
   void initState() {
+    // 調用父類的initState方法，確保父類的初始化邏輯也被執行
     super.initState();
+    
     loadTodos();
     _searchController.addListener(_onSearchChanged);
   }
 
-  // 加载数据库中的待办事项
+  // 加載數據庫中的待辦事項
   void loadTodos() async {
     todoList = await DatabaseHelper().getTodos();
     filteredList = todoList;
     setState(() {});
   }
 
-  // 搜索框内容变化时过滤待办事项
+  // 搜索框內容變化時過濾待辦事項
   void _onSearchChanged() {
     String query = _searchController.text.trim();
     if (query.isEmpty) {
@@ -45,7 +49,7 @@ class _PageTodoState extends State<PageTodo> {
     setState(() {});
   }
 
-  // 复选框点击事件（可扩展为更新数据库）
+  // 複選框點擊事件（可擴展為更新數據庫）
     void CheckChange(index) async {
       int id = todoList[index]['id'];
       bool currentDone = todoList[index]['done'] == 1;
@@ -53,19 +57,20 @@ class _PageTodoState extends State<PageTodo> {
       loadTodos();
   }
 
-  // 添加待办事项（插入数据库）
+  // 添加待辦事項（插入數據庫）
   void AddTask() async {
     await DatabaseHelper().insertTodo({
       'title': _controller.text,
-      'content': '',
+      'content': _contentController.text, // 使用內容控制器
     });
     _controller.clear();
+    _contentController.clear(); // 清空內容輸入框
     Navigator.of(context).pop();
     loadTodos();
     _onSearchChanged();
   }
 
-  // 创建待办事项弹框
+  // 創建待辦事項彈框
   void createNewTask()
   {
     showDialog(
@@ -73,13 +78,14 @@ class _PageTodoState extends State<PageTodo> {
       builder: (t){
         return DialogBox(
           controllerText: _controller,
+          controllerContent: _contentController, // 傳遞內容控制器
           ok: AddTask,
           quit: () => Navigator.of(context).pop(),
         );
       });
   }
 
-  // 删除待办（删除数据库记录）
+  // 刪除待辦（刪除數據庫記錄）
   void deleteTask(int id) async {
     await DatabaseHelper().deleteTodo(id);
     loadTodos();
@@ -109,7 +115,7 @@ class _PageTodoState extends State<PageTodo> {
               controller: _searchController,
               onChanged: (value) => _onSearchChanged(),
               decoration: InputDecoration(
-                hintText: '搜索待办事项...',
+                hintText: '搜索待辦事項...',
                 prefixIcon: Icon(Icons.search),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
