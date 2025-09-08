@@ -5,16 +5,23 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 
 class Todotitle extends StatelessWidget {
   final String taskName;
+  final String taskContent; // 新增內容
+
   final bool taskCheck;
   Function(bool?)? onchanged;
   Function(BuildContext)? deleteFunction;
+  Function(BuildContext)? editFunction; // 新增編輯功能
 
   Todotitle({
     super.key,
     required this.taskName,
+    required this.taskContent, // 新增內容
+
     required this.taskCheck,
     required this.onchanged,
     required this.deleteFunction,
+    required this.editFunction, // 新增編輯功能
+
   });
 
   @override
@@ -30,7 +37,14 @@ class Todotitle extends StatelessWidget {
               icon: Icons.delete,
               backgroundColor: Colors.red.shade300,
               borderRadius: BorderRadius.circular(12),
-            )
+            ),
+            SlidableAction(
+              onPressed: editFunction, // 新增編輯功能
+              icon: Icons.edit,
+              backgroundColor: Colors.blue.shade300,
+              borderRadius: BorderRadius.circular(12),
+            ),
+
           ]),
         child: Container(
           padding: EdgeInsets.all(24.0),
@@ -44,7 +58,12 @@ class Todotitle extends StatelessWidget {
               Text(
                 taskName,
                 style: TextStyle(decoration: taskCheck ? TextDecoration.lineThrough : TextDecoration.none),
-              )
+              ),
+              SizedBox(width: 8), // 添加間距
+              Text(
+                taskContent,
+                style: TextStyle(decoration: taskCheck ? TextDecoration.lineThrough : TextDecoration.none),
+              ),
             ],
           ),
           decoration: BoxDecoration(

@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'dart:io' show Platform;
 
 void main() {
+  // 桌面端sqllite初始化
   if (!kIsWeb && (Platform.isWindows || Platform.isLinux || Platform.isMacOS)) {
     sqfliteFfiInit();
     databaseFactory = databaseFactoryFfi;
@@ -21,11 +22,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return MaterialApp(
+      // 因此为调试模式下会显示右上角的debug标志
       debugShowCheckedModeBanner: false,
       // 主题色
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch(
-          primarySwatch: Colors.yellow,
+          primarySwatch: Colors.blue,
         ),
         checkboxTheme: CheckboxThemeData(
           // 设置复选框对号的颜色为白色
