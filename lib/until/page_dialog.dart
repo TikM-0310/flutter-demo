@@ -8,15 +8,14 @@ class DialogBox extends StatelessWidget {
   VoidCallback ok;
   VoidCallback quit;
   final TextEditingController controllerText;
+  final TextEditingController controllerContent; // 新增內容控制器
   DialogBox({ 
     super.key, 
     required this.controllerText,
+    required this.controllerContent, // 新增參數
     required this.ok,
     required this.quit
   });
-
-  
-  
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +26,7 @@ class DialogBox extends StatelessWidget {
         borderRadius: BorderRadius.circular(1)
       ),
       content: Container(
-        height: 120,
+        height: 180, // 增加高度以容納新輸入框
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -36,6 +35,13 @@ class DialogBox extends StatelessWidget {
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: "请输入待办事项"),
+            ),
+            SizedBox(height: 8), // 添加間距
+            TextField(
+              controller: controllerContent,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: "请输入待办事项内容"), // 新增內容輸入框
             ),
 
             Row(
